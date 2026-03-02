@@ -173,6 +173,6 @@ TAKT uses AI APIs (Claude or OpenAI), which can incur significant costs, especia
 
 - **Monitor API usage**: Set up billing alerts with your AI provider to avoid unexpected charges.
 - **Use `--quiet` mode**: Reduces output volume but does not reduce API calls.
-- **Choose appropriate pieces**: Simpler pieces (e.g., `default-mini`) use fewer API calls than multi-stage pieces (e.g., `default` with parallel reviews).
+- **Choose appropriate pieces**: Simpler pieces use fewer API calls than multi-stage pieces (e.g., `default` with parallel reviews).
 - **Limit CI triggers**: Use conditional triggers (e.g., `if: contains(github.event.comment.body, '@takt')`) to prevent unintended executions.
 - **Test with `--provider mock`**: Use mock provider during CI pipeline development to avoid real API costs.

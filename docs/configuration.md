@@ -73,7 +73,7 @@ interactive_preview_movements: 3  # Movement previews in interactive mode (0-10,
 
 # Builtin piece filtering (optional)
 # builtin_pieces_enabled: true           # Set false to disable all builtins
-# disabled_builtins: [magi, passthrough] # Disable specific builtin pieces
+# disabled_builtins: [magi]              # Disable specific builtin pieces
 
 # Pipeline execution configuration (optional)
 # Customize branch names, commit messages, and PR body.
@@ -369,9 +369,9 @@ piece_categories:
     pieces: [default, simple]
     children:
       Backend:
-        pieces: [expert-cqrs]
+        pieces: [dual-cqrs]
       Frontend:
-        pieces: [expert]
+        pieces: [dual]
   Research:
     pieces: [research, magi]
 

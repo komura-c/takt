@@ -103,7 +103,7 @@ Use the `--task` option to skip interactive mode and execute directly.
 takt --task "Fix bug"
 
 # Specify piece
-takt --task "Add authentication" --piece expert
+takt --task "Add authentication" --piece dual
 
 # Auto-create PR
 takt --task "Fix bug" --auto-pr
@@ -121,7 +121,7 @@ takt #6
 takt --issue 6
 
 # Issue + piece specification
-takt #6 --piece expert
+takt #6 --piece dual
 
 # Issue + auto-create PR
 takt #6 --auto-pr

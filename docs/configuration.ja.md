@@ -73,7 +73,7 @@ interactive_preview_movements: 3  # インタラクティブモードでの move
 
 # ビルトイン piece フィルタリング（省略可）
 # builtin_pieces_enabled: true           # false ですべてのビルトインを無効化
-# disabled_builtins: [magi, passthrough] # 特定のビルトイン piece を無効化
+# disabled_builtins: [magi]              # 特定のビルトイン piece を無効化
 
 # pipeline 実行設定（省略可）
 # ブランチ名、コミットメッセージ、PR 本文をカスタマイズ
@@ -369,9 +369,9 @@ piece_categories:
     pieces: [default, simple]
     children:
       Backend:
-        pieces: [expert-cqrs]
+        pieces: [dual-cqrs]
       Frontend:
-        pieces: [expert]
+        pieces: [dual]
   Research:
     pieces: [research, magi]
 

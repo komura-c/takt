@@ -463,12 +463,12 @@ Example category config:
 ```yaml
 piece_categories:
   Development:
-    pieces: [default, default-mini]
+    pieces: [default]
     children:
       Backend:
-        pieces: [expert-cqrs]
+        pieces: [dual-cqrs]
       Frontend:
-        pieces: [expert]
+        pieces: [dual]
   Research:
     pieces: [research, magi]
 show_others_category: true

@@ -1,5 +1,5 @@
-name: expert
-description: アーキテクチャ・フロントエンド・セキュリティ・QA専門家レビュー
+name: dual-cqrs
+description: フロントエンド＋バックエンド開発ピース（CQRS+ES特化）（CQRS+ES・フロントエンド・セキュリティ・QAレビューと修正ループ付き）
 piece_config:
   provider_options:
     codex:
@@ -28,6 +28,7 @@ movements:
     knowledge:
       - frontend
       - backend
+      - cqrs-es
       - architecture
     allowed_tools:
       - Read
@@ -56,6 +57,7 @@ movements:
     knowledge:
       - frontend
       - backend
+      - cqrs-es
       - security
       - architecture
     allowed_tools:
@@ -117,6 +119,7 @@ movements:
     knowledge:
       - frontend
       - backend
+      - cqrs-es
       - security
       - architecture
     allowed_tools:
@@ -153,12 +156,12 @@ movements:
     instruction: arbitrate
   - name: reviewers
     parallel:
-      - name: arch-review
+      - name: cqrs-es-review
         edit: false
-        persona: architecture-reviewer
+        persona: cqrs-es-reviewer
         policy: review
         knowledge:
-          - architecture
+          - cqrs-es
           - backend
         allowed_tools:
           - Read
@@ -169,11 +172,11 @@ movements:
         rules:
           - condition: approved
           - condition: needs_fix
-        instruction: review-arch
+        instruction: review-cqrs-es
         output_contracts:
           report:
-            - name: architect-review.md
-              format: architecture-review
+            - name: cqrs-es-review.md
+              format: cqrs-es-review
       - name: frontend-review
         edit: false
         persona: frontend-reviewer
@@ -246,6 +249,7 @@ movements:
     knowledge:
       - frontend
       - backend
+      - cqrs-es
       - security
       - architecture
     allowed_tools:
@@ -267,7 +271,7 @@ movements:
     instruction: fix
   - name: supervise
     edit: false
-    persona: expert-supervisor
+    persona: dual-supervisor
     policy: review
     allowed_tools:
       - Read
@@ -298,6 +302,7 @@ movements:
     knowledge:
       - frontend
       - backend
+      - cqrs-es
       - security
       - architecture
     allowed_tools:

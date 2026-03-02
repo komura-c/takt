@@ -1,5 +1,5 @@
-name: expert-cqrs
-description: CQRS+ES・フロントエンド・セキュリティ・QA専門家レビュー
+name: dual-cqrs
+description: Frontend + backend development piece (CQRS+ES specialized) with CQRS+ES, frontend, security, and QA reviews with fix loops
 piece_config:
   provider_options:
     codex:
@@ -17,9 +17,9 @@ loop_monitors:
       persona: supervisor
       instruction_template: loop-monitor-ai-fix
       rules:
-        - condition: 健全（進捗あり）
+        - condition: Healthy (making progress)
           next: ai_review
-        - condition: 非生産的（同じ指摘の反復・修正未反映）
+        - condition: Unproductive (same findings repeated or fixes not reflected)
           next: ai_no_fix
 movements:
   - name: plan
@@ -39,9 +39,9 @@ movements:
       - WebFetch
     instruction: plan
     rules:
-      - condition: タスク分析と計画が完了した
+      - condition: Task analysis and planning is complete
         next: implement
-      - condition: 要件が不明確で計画を立てられない
+      - condition: Requirements are unclear and planning cannot proceed
         next: ABORT
     output_contracts:
       report:
@@ -71,13 +71,13 @@ movements:
       - WebFetch
     instruction: implement
     rules:
-      - condition: 実装が完了した
+      - condition: Implementation is complete
         next: ai_review
-      - condition: 実装未着手（レポートのみ）
+      - condition: No implementation (report only)
         next: ai_review
-      - condition: 実装を進行できない
+      - condition: Cannot proceed with implementation
         next: ai_review
-      - condition: ユーザー入力が必要
+      - condition: User input required
         next: implement
         requires_user_input: true
         interactive_only: true
@@ -101,9 +101,9 @@ movements:
       - WebFetch
     instruction: ai-review
     rules:
-      - condition: AI特有の問題が見つからない
+      - condition: No AI-specific issues found
         next: reviewers
-      - condition: AI特有の問題が検出された
+      - condition: AI-specific issues detected
         next: ai_fix
     output_contracts:
       report:
@@ -134,11 +134,11 @@ movements:
     instruction: ai-fix
     pass_previous_response: false
     rules:
-      - condition: AI Reviewerの指摘に対する修正が完了した
+      - condition: AI Reviewer's issues have been fixed
         next: ai_review
-      - condition: 修正不要（指摘対象ファイル/仕様の確認済み）
+      - condition: No fix needed (verified target files/spec)
         next: ai_no_fix
-      - condition: 修正を進行できない
+      - condition: Unable to proceed with fixes
         next: ai_no_fix
   - name: ai_no_fix
     edit: false
@@ -149,9 +149,9 @@ movements:
       - Glob
       - Grep
     rules:
-      - condition: ai_reviewの指摘が妥当（修正すべき）
+      - condition: ai_review's findings are valid (fix required)
         next: ai_fix
-      - condition: ai_fixの判断が妥当（修正不要）
+      - condition: ai_fix's judgment is valid (no fix needed)
         next: reviewers
     instruction: arbitrate
   - name: reviewers
@@ -264,14 +264,14 @@ movements:
     required_permission_mode: edit
     pass_previous_response: false
     rules:
-      - condition: 修正が完了した
+      - condition: Fix complete
         next: reviewers
-      - condition: 修正を進行できない
+      - condition: Cannot proceed, insufficient info
         next: plan
     instruction: fix
   - name: supervise
     edit: false
-    persona: expert-supervisor
+    persona: dual-supervisor
     policy: review
     allowed_tools:
       - Read
@@ -282,9 +282,9 @@ movements:
     instruction: supervise
     pass_previous_response: false
     rules:
-      - condition: すべての検証が完了し、マージ可能な状態である
+      - condition: All validations pass and ready to merge
         next: COMPLETE
-      - condition: 問題が検出された
+      - condition: Issues detected during final review
         next: fix_supervisor
     output_contracts:
       report:
@@ -317,7 +317,7 @@ movements:
     instruction: fix-supervisor
     pass_previous_response: false
     rules:
-      - condition: 監督者の指摘に対する修正が完了した
+      - condition: Supervisor's issues have been fixed
         next: supervise
-      - condition: 修正を進行できない
+      - condition: Unable to proceed with fixes
         next: plan

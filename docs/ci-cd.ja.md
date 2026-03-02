@@ -173,6 +173,6 @@ TAKT は AI API（Claude または OpenAI）を使用するため、特に CI/CD
 
 - **API 使用量の監視**: 予期しない請求を避けるため、AI provider で課金アラートを設定してください。
 - **`--quiet` モードの使用**: 出力量は削減されますが、API 呼び出し回数は減りません。
-- **適切な piece の選択**: シンプルな piece（例: `default-mini`）はマルチステージの piece（例: 並列レビュー付きの `default`）よりも API 呼び出しが少なくなります。
+- **適切な piece の選択**: シンプルな piece はマルチステージの piece（例: 並列レビュー付きの `default`）よりも API 呼び出しが少なくなります。
 - **CI トリガーの制限**: 意図しない実行を防ぐため、条件付きトリガー（例: `if: contains(github.event.comment.body, '@takt')`）を使用してください。
 - **`--provider mock` でのテスト**: CI パイプラインの開発中は mock provider を使用して、実際の API コストを回避してください。

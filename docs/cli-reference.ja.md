@@ -103,7 +103,7 @@ Proceed with these task instructions? (Y/n) y
 takt --task "Fix bug"
 
 # piece を指定
-takt --task "Add authentication" --piece expert
+takt --task "Add authentication" --piece dual
 
 # PR を自動作成
 takt --task "Fix bug" --auto-pr
@@ -121,7 +121,7 @@ takt #6
 takt --issue 6
 
 # Issue + piece 指定
-takt #6 --piece expert
+takt #6 --piece dual
 
 # Issue + PR 自動作成
 takt #6 --auto-pr

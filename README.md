@@ -124,12 +124,10 @@ Rules determine the next movement. `COMPLETE` ends the piece successfully, `ABOR
 
 | Piece | Use Case |
 |-------|----------|
-| `default-mini` | Quick fixes. Lightweight plan → implement → parallel review → fix loop. |
-| `default-test-first-mini` | Test-first development. Write tests first, then implement to pass them. |
+| `default` | Standard development. Test-first with AI antipattern review and parallel review (architecture + supervisor). |
 | `frontend-mini` | Frontend-focused mini configuration. |
 | `backend-mini` | Backend-focused mini configuration. |
-| `expert-mini` | Expert-level mini configuration. |
-| `default` | Serious development. Multi-stage review with parallel reviewers. Used for TAKT's own development. |
+| `dual-mini` | Frontend + backend mini configuration. |
 
 See the [Builtin Catalog](./docs/builtin-catalog.md) for all pieces and personas.
 
