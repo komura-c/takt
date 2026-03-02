@@ -9,6 +9,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('../shared/ui/index.js', () => ({
   info: vi.fn(),
+  success: vi.fn(),
   error: vi.fn(),
   withProgress: vi.fn(async (_start, _done, operation) => operation()),
 }));
@@ -76,11 +77,13 @@ vi.mock('../features/interactive/index.js', () => ({
 
 const mockListAllTaskItems = vi.fn();
 const mockIsStaleRunningTask = vi.fn();
+const mockCheckoutBranch = vi.fn();
 vi.mock('../infra/task/index.js', () => ({
   TaskRunner: vi.fn(() => ({
     listAllTaskItems: mockListAllTaskItems,
   })),
   isStaleRunningTask: (...args: unknown[]) => mockIsStaleRunningTask(...args),
+  checkoutBranch: (...args: unknown[]) => mockCheckoutBranch(...args),
 }));
 
 vi.mock('../infra/config/index.js', () => ({
@@ -171,6 +174,8 @@ describe('PR resolution in routing', () => {
         expect.stringContaining('## PR #456 Review Comments:'),
         expect.anything(),
         undefined,
+        undefined,
+        { excludeActions: ['create_issue'] },
       );
     });
 
@@ -184,13 +189,27 @@ describe('PR resolution in routing', () => {
       // When
       await executeDefaultAction();
 
-      // Then: selectAndExecuteTask is called (branch is no longer passed via selectOptions)
+      // Then: selectAndExecuteTask is called
       expect(mockSelectAndExecuteTask).toHaveBeenCalledWith(
         '/test/cwd',
         'summarized task',
         expect.any(Object),
         undefined,
       );
+    });
+
+    it('should checkout PR branch before executing task', async () => {
+      // Given
+      mockOpts.pr = 456;
+      const prReview = createMockPrReview({ headRefName: 'feat/my-pr-branch' });
+      mockCheckCliStatus.mockReturnValue({ available: true });
+      mockFetchPrReviewComments.mockReturnValue(prReview);
+
+      // When
+      await executeDefaultAction();
+
+      // Then: checkoutBranch is called with the PR's head branch
+      expect(mockCheckoutBranch).toHaveBeenCalledWith('/test/cwd', 'feat/my-pr-branch');
     });
 
     it('should exit with error when gh CLI is unavailable', async () => {
@@ -229,6 +248,8 @@ describe('PR resolution in routing', () => {
         expect.stringContaining('## PR #456 Review Comments:'),
         expect.anything(),
         undefined,
+        undefined,
+        { excludeActions: ['create_issue'] },
       );
     });
 

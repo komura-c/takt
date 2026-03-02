@@ -231,6 +231,8 @@ describe('Issue resolution in routing', () => {
         '## GitHub Issue #131: Issue #131',
         expect.anything(),
         undefined,
+        undefined,
+        undefined,
       );
 
       // Then: selectAndExecuteTask should be called (issues are used only for initialInput, not selectOptions)
@@ -282,6 +284,8 @@ describe('Issue resolution in routing', () => {
         '## GitHub Issue #131: Issue #131',
         expect.anything(),
         undefined,
+        undefined,
+        undefined,
       );
 
       // Then: selectAndExecuteTask should be called
@@ -305,6 +309,8 @@ describe('Issue resolution in routing', () => {
         'refactor the code',
         expect.anything(),
         undefined,
+        undefined,
+        undefined,
       );
 
       // Then: no issue fetching should occur
@@ -323,6 +329,8 @@ describe('Issue resolution in routing', () => {
         '/test/cwd',
         undefined,
         expect.anything(),
+        undefined,
+        undefined,
         undefined,
       );
 
@@ -399,6 +407,8 @@ describe('Issue resolution in routing', () => {
           ]),
         }),
         undefined,
+        undefined,
+        undefined,
       );
     });
 
@@ -433,6 +443,8 @@ describe('Issue resolution in routing', () => {
           ]),
         }),
         undefined,
+        undefined,
+        undefined,
       );
     });
 
@@ -450,6 +462,8 @@ describe('Issue resolution in routing', () => {
         'fix issue',
         expect.objectContaining({ taskHistory: [] }),
         undefined,
+        undefined,
+        undefined,
       );
     });
 
@@ -462,6 +476,8 @@ describe('Issue resolution in routing', () => {
         '/test/cwd',
         'verify history',
         expect.objectContaining({ taskHistory: [] }),
+        undefined,
+        undefined,
         undefined,
       );
     });
@@ -533,6 +549,8 @@ describe('Issue resolution in routing', () => {
         undefined,
         expect.anything(),
         'saved-session-123',
+        undefined,
+        undefined,
       );
     });
 
@@ -556,6 +574,8 @@ describe('Issue resolution in routing', () => {
         undefined,
         expect.anything(),
         undefined,
+        undefined,
+        undefined,
       );
     });
 
@@ -572,6 +592,8 @@ describe('Issue resolution in routing', () => {
         undefined,
         expect.anything(),
         undefined,
+        undefined,
+        undefined,
       );
     });
   });
@@ -585,6 +607,8 @@ describe('Issue resolution in routing', () => {
         '/test/cwd',
         undefined,
         expect.anything(),
+        undefined,
+        undefined,
         undefined,
       );
     });
