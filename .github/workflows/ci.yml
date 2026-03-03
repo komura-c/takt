@@ -8,6 +8,10 @@ on:
     branches: [main, "takt/**"]
   workflow_dispatch:
 
+concurrency:
+  group: ci-${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
