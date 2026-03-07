@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { createLogger } from '../../shared/utils/index.js';
 import { resolveConfigValue } from '../config/index.js';
 import type { WorktreeOptions, WorktreeResult } from './types.js';
-import { branchExists, resolveBaseBranch as resolveBaseBranchInternal } from './clone-base-branch.js';
+import { branchExists, localBranchExists, remoteBranchExists, resolveBaseBranch as resolveBaseBranchInternal } from './clone-base-branch.js';
 import { cloneAndIsolate, resolveCloneSubmoduleOptions } from './clone-exec.js';
 import { loadCloneMeta, removeCloneMeta as removeCloneMetaFile, saveCloneMeta as saveCloneMetaFile } from './clone-meta.js';
 
@@ -100,8 +100,14 @@ export class CloneManager {
       { path: clonePath, branch }
     );
 
-    if (branchExists(projectDir, branch)) {
+    if (localBranchExists(projectDir, branch)) {
       cloneAndIsolate(projectDir, clonePath, branch);
+    } else if (remoteBranchExists(projectDir, branch)) {
+      cloneAndIsolate(projectDir, clonePath);
+      execFileSync('git', ['fetch', projectDir, `refs/remotes/origin/${branch}:refs/heads/${branch}`], {
+        cwd: clonePath, stdio: 'pipe',
+      });
+      execFileSync('git', ['checkout', branch], { cwd: clonePath, stdio: 'pipe' });
     } else {
       const { branch: baseBranch, fetchedCommit } = CloneManager.resolveBaseBranch(projectDir, options.baseBranch);
       cloneAndIsolate(projectDir, clonePath, baseBranch);
