@@ -35,6 +35,8 @@ import {
   denormalizePieceArpeggioPolicy,
   normalizeSyncConflictResolver,
   denormalizeSyncConflictResolver,
+  normalizePieceMcpServers,
+  denormalizePieceMcpServers,
 } from './projectConfigTransforms.js';
 
 export type { ProjectConfig as ProjectLocalConfig } from '../types.js';
@@ -168,11 +170,7 @@ export function loadProjectConfig(projectDir: string): ProjectConfig {
     pieceRuntimePrepare: normalizePieceRuntimePreparePolicy(piece_runtime_prepare),
     pieceArpeggio: normalizePieceArpeggioPolicy(piece_arpeggio),
     syncConflictResolver: normalizeSyncConflictResolver(sync_conflict_resolver),
-    pieceMcpServers: piece_mcp_servers ? {
-      stdio: piece_mcp_servers.stdio,
-      sse: piece_mcp_servers.sse,
-      http: piece_mcp_servers.http,
-    } : undefined,
+    pieceMcpServers: normalizePieceMcpServers(piece_mcp_servers),
   };
 }
 
@@ -271,28 +269,13 @@ export function saveProjectConfig(projectDir: string, config: ProjectConfig): vo
   } else {
     delete savePayload.runtime;
   }
-  const rawRuntimePrepare = denormalizePieceRuntimePreparePolicy(config.pieceRuntimePrepare);
-  if (rawRuntimePrepare) {
-    savePayload.piece_runtime_prepare = rawRuntimePrepare;
-  } else {
-    delete savePayload.piece_runtime_prepare;
-  }
-  const rawArpeggio = denormalizePieceArpeggioPolicy(config.pieceArpeggio);
-  if (rawArpeggio) {
-    savePayload.piece_arpeggio = rawArpeggio;
-  } else {
-    delete savePayload.piece_arpeggio;
-  }
-  const rawSyncResolver = denormalizeSyncConflictResolver(config.syncConflictResolver);
-  if (rawSyncResolver) {
-    savePayload.sync_conflict_resolver = rawSyncResolver;
-  } else {
-    delete savePayload.sync_conflict_resolver;
-  }
-  if (config.pieceMcpServers) {
-    savePayload.piece_mcp_servers = config.pieceMcpServers;
-  } else {
-    delete savePayload.piece_mcp_servers;
+  for (const [key, raw] of [
+    ['piece_runtime_prepare', denormalizePieceRuntimePreparePolicy(config.pieceRuntimePrepare)],
+    ['piece_arpeggio', denormalizePieceArpeggioPolicy(config.pieceArpeggio)],
+    ['sync_conflict_resolver', denormalizeSyncConflictResolver(config.syncConflictResolver)],
+    ['piece_mcp_servers', denormalizePieceMcpServers(config.pieceMcpServers)],
+  ] as const) {
+    if (raw) { savePayload[key] = raw; } else { delete savePayload[key]; }
   }
 
   const content = stringify(savePayload, { indent: 2 });
