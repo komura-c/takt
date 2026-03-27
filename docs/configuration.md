@@ -11,7 +11,6 @@ Configure TAKT defaults in `~/.takt/config.yaml`. This file is created automatic
 ```yaml
 # ~/.takt/config.yaml
 language: en                  # UI language: 'en' or 'ja'
-default_piece: default        # Default piece for new projects
 logging:
   level: info                 # Log level: debug, info, warn, error
 provider: claude              # Default provider: claude, codex, opencode, cursor, or copilot
@@ -119,7 +118,6 @@ interactive_preview_movements: 3  # Movement previews in interactive mode (0-10,
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `language` | `"en"` \| `"ja"` | `"en"` | UI language |
-| `default_piece` | string | `"default"` | Default piece for new projects |
 | `logging.level` | `"debug"` \| `"info"` \| `"warn"` \| `"error"` | `"info"` | Log level |
 | `provider` | `"claude"` \| `"codex"` \| `"opencode"` \| `"cursor"` \| `"copilot"` | `"claude"` | Default AI provider |
 | `model` | string | - | Default model name (passed to provider as-is) |

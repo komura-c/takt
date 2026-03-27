@@ -11,7 +11,6 @@
 ```yaml
 # ~/.takt/config.yaml
 language: en                  # UI 言語: 'en' または 'ja'
-default_piece: default        # 新規プロジェクトのデフォルト piece
 logging:
   level: info                 # ログレベル: debug, info, warn, error
 provider: claude              # デフォルト provider: claude, codex, opencode, cursor, または copilot
@@ -119,7 +118,6 @@ interactive_preview_movements: 3  # インタラクティブモードでの move
 | フィールド | 型 | デフォルト | 説明 |
 |-----------|------|---------|------|
 | `language` | `"en"` \| `"ja"` | `"en"` | UI 言語 |
-| `default_piece` | string | `"default"` | 新規プロジェクトのデフォルト piece |
 | `logging.level` | `"debug"` \| `"info"` \| `"warn"` \| `"error"` | `"info"` | ログレベル |
 | `provider` | `"claude"` \| `"codex"` \| `"opencode"` \| `"cursor"` \| `"copilot"` | `"claude"` | デフォルト AI provider |
 | `model` | string | - | デフォルトモデル名（provider にそのまま渡される） |
